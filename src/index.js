@@ -4,7 +4,8 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 import { Provider } from 'react-redux';
-import { store } from './store'
+import { store } from './store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
@@ -16,7 +17,4 @@ ReactDOM.render(
    document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

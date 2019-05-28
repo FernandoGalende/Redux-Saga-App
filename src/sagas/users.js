@@ -1,4 +1,4 @@
-import {takeEvery, takeLatest, take, call, put, fork} from 'redux-saga/effects';
+import { takeEvery, takeLatest, take, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/users';
 import * as api from '../api/users';
 
@@ -7,9 +7,11 @@ function* getUsers(){
     const { data } = yield call(api.getUsers)
     yield put(actions.getUsersSuccess({
       items: data.data
-    }))
+    }));
 	}catch(e){
-    console.error('error: ', e)
+    yield put(actions.usersError({
+      error: 'An error ocurred when trying to get users'
+    }));
 	}
 }
 
@@ -23,9 +25,11 @@ function* createUser(action){
       firstName: action.payload.firstName,
       lastName: action.payload.lastName
     });
-    yield call(getUsers)
+    yield call(getUsers);
 	}catch(e){
-    console.error('error: ', e)
+    yield put(actions.usersError({
+      error: 'An error ocurred when trying to create the user'
+    }));
 	}
 }
 
@@ -40,7 +44,9 @@ function* deleteUser(userId){
     yield call(api.deleteUser, userId);
     yield call(getUsers)
 	}catch(e){
-    console.error('error: ', e)
+    yield put(actions.usersError({
+      error: 'An error ocurred when trying to delete the user'
+    }))
 	}
 }
 
